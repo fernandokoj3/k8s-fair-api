@@ -25,7 +25,7 @@ export class FeiraLivreService {
   constructor(private repository: FeiraLivreRepository) {}
 
   public async list(feiraLivreList: FeiraLivreListRequest) {
-    log.info('Start list(...)')
+    log.info('Start list(...)');
     let pageable = FeiraLivreListRequest.get(feiraLivreList, FeiraLivre);
 
     log.info('Find by pegeable request', pageable);

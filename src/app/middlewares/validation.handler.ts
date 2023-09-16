@@ -1,13 +1,12 @@
 import { NextFunction, Request, Response } from 'express';
 import { Class } from 'utility-types';
-import { validateObject } from './schema.validation';
+import { validateObject } from '@/middlewares/schema.validation';
 
 function getValidatorMiddleware<T>(
   reqProperty: `body` | `query` | `params`,
   validationClass: Class<T>,
 ) {
   return async (req: Request, response: Response, next: NextFunction) => {
-    // Valida campos do objeto e obtém objeto de erro caso contenha
     let { error, data } = await validateObject<T>(
       req[reqProperty],
       validationClass,

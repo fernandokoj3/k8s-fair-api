@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { Expose, Type } from 'class-transformer';
-import { PageableOptions } from '../request/page.base.request';
+import { PageableOptions } from '@/dto/request/page.base.request';
 
 export class PageMetaResponse {
   @Expose({ name: 'page' })
@@ -33,10 +33,10 @@ export class PageMetaResponse {
     totalItemsPage: number,
   ) {
     this.order_by = options.order + ' ' + options.sort;
-    this.page = options.page + 1;
+    this.page = options.page || 1;
     this.limit = options.limit;
     this.total_items = totalItems;
-    this.total_pages = Math.ceil(this.total_items / this.limit);
+    this.total_pages = Math.floor(this.total_items / this.limit);
     this.total_items_page = totalItemsPage;
     this.has_previous_page =
       this.total_items_page === 0 ? false : this.page > 1;

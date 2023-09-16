@@ -1,0 +1,24 @@
+---
+apiVersion: k3d.io/v1alpha4
+kind: Simple
+metadata:
+  name: k3s-default
+servers: 1
+agents: 1
+image: docker.io/rancher/k3s:v1.24.4-k3s1
+ports:
+  - port: 80:80
+    nodeFilters:
+      - loadbalancer
+  - port: 30000:80
+    nodeFilters:
+      - loadbalancer
+  - port: 4433:443
+    nodeFilters:
+      - loadbalancer
+options:
+  k3s:
+    nodeLabels:
+      - label: node=local
+        nodeFilters:
+          - agent:*

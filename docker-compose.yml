@@ -1,21 +1,30 @@
 version: '3'
+
 services:
+  postgres:
+    image: postgres
+    restart: always
+    ports:
+      - '54320:5432'
+    environment:
+      POSTGRES_DB: docker
+      POSTGRES_USER: docker
+      POSTGRES_PASSWORD: docker
+
   server:
     build:
       context: ./
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=postgres
-  postgres:
-    image: 'postgres'
-    container_name: postgres
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=postgres
     ports:
-      - '5432:5432'
-
+      - '3000:3000'
     depends_on:
-      - server
+      - postgres
+    links:
+      - postgres
+    environment:
+      APP_DATABASE_NAME: docker
+      APP_DATABASE_USER: docker
+      APP_DATABASE_PWD: docker
+      APP_DATABASE_HOST: postgres
+      APP_DATABASE_PORT: 5432
+      APP_DATABASE_TYPE: postgres
+      APP_DATABASE_SYNCHRONIZE: false

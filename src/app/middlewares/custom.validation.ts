@@ -1,6 +1,6 @@
 import { buildMessage, ValidateBy, ValidationOptions } from 'class-validator';
 import matchesValidator from 'validator/lib/matches';
-import { Region } from '../models/region';
+import { Region } from '@/models/region';
 
 export const IS_BIGINT = 'isBigInt';
 export const IS_REGION_NUMBER = 'IsRegionNumber';

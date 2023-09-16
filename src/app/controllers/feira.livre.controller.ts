@@ -13,7 +13,7 @@ import {
   FeiraRequestOneRequest,
 } from '@/dto/request/feira.livre.request';
 
-@Controller('/')
+@Controller('/fair')
 export class FeiraLivreController {
   constructor(private feiraLivreService: FeiraLivreService) {}
 

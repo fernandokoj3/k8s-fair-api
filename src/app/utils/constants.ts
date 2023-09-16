@@ -3,7 +3,7 @@ import { resolve } from 'path';
 
 const environmment = process.env.ENVIRONMENT ?? 'local';
 
-if (environmment) {
+if (environmment === 'local') {
   const path = resolve(__dirname, `../../../environments/.env.${environmment}`);
   dotenv.config({ path });
 } else {
@@ -15,7 +15,7 @@ export const DATABASE = Object.freeze({
   USER: process.env.APP_DATABASE_USER,
   PWD: process.env.APP_DATABASE_PWD,
   HOST: process.env.APP_DATABASE_HOST,
-  PORT: Number.parseInt(process.env.APP_DATABASE_PORT as any),
+  PORT: Number.parseInt(process.env.APP_DATABASE_PORT),
   TYPE: process.env.APP_DATABASE_TYPE as any,
   SYNCHRONIZE: process.env.APP_DATABASE_SYNCHRONIZE === 'true',
   LOGGING: process.env.ENVIRONMENT === 'local',
