@@ -14,7 +14,7 @@ spec:
     spec:
       initContainers:
         - name: fair-api-migration
-          image: koj3/fair-api:latest
+          image: koj3/fair-api:{{TAG_VERSION}}
           command: ["npm", "run", "migration:run:local"]
           envFrom:
             - configMapRef:
@@ -26,7 +26,7 @@ spec:
                   key: POSTGRES_PASSWORD
                   name: database-secret
         - name: fair-api-seed
-          image: koj3/fair-api:latest
+          image: koj3/fair-api:{{TAG_VERSION}}
           command: ["npm", "run", "seed:local"]
           envFrom:
             - configMapRef:
@@ -39,7 +39,7 @@ spec:
                   name: database-secret
       containers:
         - name: fair-api
-          image: koj3/fair-api:latest
+          image: koj3/fair-api:{{TAG_VERSION}}
           resources:
             requests:
               memory: "32Mi"
