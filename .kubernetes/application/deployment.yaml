@@ -1,49 +1,4 @@
 apiVersion: apps/v1
-kind: StatefulSet
-metadata:
-  name: database-statefulset
-spec:
-  selector:
-    matchLabels:
-      app: database-postgres
-  serviceName: database-postgres
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        app: database-postgres
-    spec:
-      volumes:
-        - name: database-volume
-          persistentVolumeClaim:
-            claimName: local-pvc
-      containers:
-        - name: database-postgres
-          image: postgres:latest
-          ports:
-            - containerPort: 5432
-          volumeMounts:
-            - name: database-volume
-              mountPath: /local/database
-          resources:
-            requests:
-              memory: "32Mi"
-              cpu: "150m"
-            limits:
-              memory: "256Mi"
-              cpu: "500m"
-          envFrom:
-            - configMapRef:
-                name: database-configmap
-          env:
-            - name: POSTGRES_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  key: POSTGRES_PASSWORD
-                  # Nome do secret
-                  name: database-secret
----
-apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: fair-api-deployment
@@ -59,7 +14,7 @@ spec:
     spec:
       initContainers:
         - name: fair-api-migration
-          image: koj3/fair-api:1.0
+          image: koj3/fair-api:latest
           command: ["npm", "run", "migration:run:local"]
           envFrom:
             - configMapRef:
@@ -71,7 +26,7 @@ spec:
                   key: POSTGRES_PASSWORD
                   name: database-secret
         - name: fair-api-seed
-          image: koj3/fair-api:1.0
+          image: koj3/fair-api:latest
           command: ["npm", "run", "seed:local"]
           envFrom:
             - configMapRef:
@@ -84,7 +39,7 @@ spec:
                   name: database-secret
       containers:
         - name: fair-api
-          image: koj3/fair-api:1.0
+          image: koj3/fair-api:latest
           resources:
             requests:
               memory: "32Mi"
